@@ -1,0 +1,107 @@
+$player: ".c-player";
+
+html,
+body {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+
+  padding: 0;
+  margin: 0;
+
+  background: #{$field-background};
+
+  box-shadow: inset 0 0 0 5px #101818, inset 0 0 0 15px #293031, inset 0 0 0 20px #101818,
+    inset 0 80px 0 0 #548491, inset 0 140px 0 0 #89445A, inset 0 145px 0 0 #181C21;
+
+  // TODO: Convert svg background to linear gradient composition
+
+  &:before {
+    content: "";
+    position: absolute;
+    width: calc(100% - 150px);
+    height: 90px;
+    top: 30px;
+    left: 50%;
+    transform: translatex(-50%);
+    background: linear-gradient(to right, transparent 0 12px, #101818 12px 15px, #31494A 15px 18px, #101818 18px 21px, transparent 21px 100%),
+      linear-gradient(to bottom, #A4CCE6 0% 75%, #6392AD 75% 100%);
+
+    background-position: center center, left top;
+    background-size: 145px 6px, 100% 100%;
+
+    box-shadow: inset 0 0 0 5px #31494A, inset 0 0 0 10px #101818;
+    border: 5px solid #101818;
+  }
+}
+
+#{$player} {
+  --x: 0;
+  --y: 0;
+  position: relative;
+  width: 85px;
+  height: 150px;
+  transform: translate(var(--x), var(--y));
+
+  &:before,
+  &:after {
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: block;
+  }
+
+  &:before {
+    background: #{$player-background} no-repeat center bottom;
+  }
+
+  &:after {
+    background: #{$player-hat} no-repeat 12px 35px;
+  }
+
+
+  &--walking:before {
+    background: #{$player-walking-background} no-repeat center bottom;
+    animation: PlayerWalking 0.8s steps(12) infinite;
+  }
+
+
+  &--walking:after {
+    animation: HatWalking 0.8s step-start infinite;
+  }
+
+  &--turn-left {
+
+    &:before,
+    &:after {
+      transform: scalex(-1);
+    }
+  }
+}
+
+@keyframes PlayerWalking {
+  from {
+    background-position-x: 0px;
+  }
+
+  to {
+    background-position-x: -1020px;
+  }
+}
+
+@keyframes HatWalking {
+
+  0%,
+  100% {
+    background-position: 12px 30px;
+  }
+
+  25%,
+  75% {
+    background-position: 12px 25px;
+  }
+
+  50% {
+    background-position: 12px 30px;
+  }
